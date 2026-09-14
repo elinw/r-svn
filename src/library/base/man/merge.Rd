@@ -106,6 +106,10 @@ merge(x, y, \dots)
   Currently long vectors are not accepted for inputs, which are thus
   restricted to less than 2^31 rows. That restriction also applies to
   the result for 32-bit platforms.
+
+  Columns used in merging but are of different classes are merged
+  using R's coercion rules. Results may be unexpected. Ensuring that merge
+  columns are the same class prior to merging is recommended.
 }
 
 \value{
@@ -165,5 +169,9 @@ merge(x, y, by = c("k1","k2")) # NAs match
 merge(x, y, by = "k1") # NAs match, so 6 rows
 merge(x, y, by = "k2", incomparables = NA) # 2 rows
 }
+## example of merging with differing classes.
+merge(data.frame(a="3", b=""), data.frame(a=3, b=""))
+merge(data.frame(a=3, b=""), data.frame(a="3", b=""))
+
 \keyword{array}
 \keyword{manip}
